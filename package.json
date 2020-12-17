@@ -4,14 +4,19 @@
   "description": "medical history tracker app",
   "main": "app.js",
   "scripts": {
+    "mysql": "mysql --protocol=TCP -u risha -p",
+    "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "risha dassi",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.0.0",
+    "bcryptjs": "^2.4.3",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "morgan": "^1.10.0",
     "mysql2": "^2.2.5"
   }
 }

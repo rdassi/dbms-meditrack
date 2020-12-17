@@ -1,82 +1,109 @@
 const express = require("express");
 const bcrypt = require("bcryptjs");
+const assert = require("assert");
+//const auth = require("/middleware/auth");
+const generateAuthToken = require("./token/generateAuthToken");
+const { db } = require('../db');
 
-// const {mysql} = require("../../db/mysql");
-const auth = require("/middleware/auth");
-const generateAuthToken = require("/token/generateAuthToken");
-
-// const ForgotPassword = require("../../models/ForgotPassword");
-// const mailer = require("../../mailer/mailer");
 
 const router = express.Router();
+router.post('/register/doctor', async (req, res, next) => {
+    //input {..data..}
+    //output {ok:true}
+    // TODO REGISTER
+try{
+    
+    //temp password added here
+    // req.body.pwd = "passowrd";
+    const pwd = req.body.pwd;
+    
+    const salt = await bcrypt.genSalt(10);
+    
+    const hashedpwd = await bcrypt.hash(pwd, salt);
+    console.log(pwd,hashedpwd);
+    const [rows] = await db.query('insert into doctor (email, name, ph_no, dob, sex, qualification, specialization, pwd) values(?)', [[req.body.email, req.body.name, req.body.ph_no, req.body.dob, req.body.sex, req.body.qualification, req.body.specialization, hashedpwd]]);
+    //assert(rows.length === 1, 'incorrect values');
+    res.json({ "ok": "true" });
 
-router.get("/",auth,async (req,res)=>{
+}
+    catch (e) {
+        console.log(e);
+    res.status(403).json({ ok: false, status: 'no auth' });
+}
+})
+
+router.post('/register/patient', async (req, res, next) => {
+    //input {..data..}
+    //output {ok:true}
+  
     try {
-        const[results,fields] =  await mysql.query("SELECT * FROM users WHERE email = ?",[req.user.email]);
-            const userString = JSON.stringify(results[0]);
-            const user = JSON.parse(userString);
-            delete user.passwd;
-            res.json(user);
-    } catch (error) {
-        res.status(500).send("Server Error!");
-        console.log(error);
-    }
-});
+        // req.body.pwd = "passowrd";
+        const pwd = req.body.pwd;
+        const salt = await bcrypt.genSalt(10);
+        const hashedpwd = await bcrypt.hash(pwd, salt);
+        console.log(pwd,hashedpwd);
+        const [rows] = await db.query('insert into patient (email, name, ph_no, dob, address, sex, age,height, weight, pwd) values(?)', [[req.body.email, req.body.name, req.body.ph_no, req.body.dob, req.body.address, req.body.sex, req.body.age, req.body.height, req.body.weight, hashedpwd]]);
+        //assert(rows.length === 1, 'incorrect values');
+        res.json({ "ok": "true" });
 
-router.post("/login",async (req,res)=>{
+    }
+    catch (e) {
+        console.log(e);
+        res.status(403).json({ ok: false, status: 'no auth' });
+    }
+})
+
+
+router.post('/login/doctor', async (req, res, next) => {
+    //input -> req.body = {email:<>,pwd:<>}
+    //output ->{ok:true, atoken:<>}
+
     try {
-        const [results,fields] =  await mysql.query("SELECT id,email,passwd,isUpdater FROM users WHERE email = ?",[req.body.email]);
-        if(results.length==0){
-            return res.status(400).json({msg:"Authentication Error!"});
+        const [rows] = await db.query('select email,pwd from doctor where email=?', [req.body.email]);
+        // if(rows.length===0){throw new Error();}
+        assert(rows.length === 1, 'no users');
+        const sentPwd = req.body.pwd;
+        const expectedPwd = rows[0].pwd;
+        const result = await bcrypt.compare(sentPwd, expectedPwd);
+
+        if (result) {
+            let docToken= await generateAuthToken(req.body.email,"doctor");
+            res.json({ ok: true, atoken: docToken });
+        } else {
+            throw new Error();
         }
-        const userString = JSON.stringify(results[0]);
-        const user_data = JSON.parse(userString);
-        const user = {id:user_data.id,email:user_data.email,isUpdater:user_data.isUpdater}
-        const isMatch = await bcrypt.compare(req.body.password,user_data.passwd);
-        if(isMatch){
-            generateAuthToken(user,(token)=>{
-                res.json({token});
-            });   
-        }
-        else{
-            res.status(400).json({msg:"Authentication Error!"});
-        }
-    } catch (error) {
-        res.status(500).send("Server Error!");
-        console.log(error);
+
+    } catch (e) {
+        console.log(e);
+        res.status(403).json({ ok: false, status: 'no auth' });
     }
-});
+    
+})
 
+router.post('/login/patient', async (req, res, next) => {
+    //input -> req.body = {email:<>,pwd:<>}
+    //output ->{ok:true, atoken:<>}
 
-
-// router.post("/resetpassword",async (req,res)=>{
-//     try{
-//         const email = req.body.email;
-//         const otp = req.body.otp;
-//         let newPassword = req.body.newPassword;
-//         const forgotPasswordrequest = await ForgotPassword.findOne({email,otp})
-//         if(!forgotPasswordrequest){
-//             return res.json({"code":"0","msg":"invalid otp!"});
-//         }
-//         if(otp==forgotPasswordrequest.otp){
-//             const salt = await bcrypt.genSalt(10);
-//             newPassword = await bcrypt.hash(newPassword,salt);
-//             const[updatedResults] = await mysql.query("UPDATE users SET passwd = ? WHERE email = ?",[newPassword,email]);
-//             const JSONstring = JSON.stringify(updatedResults);
-//             const result = JSON.parse(JSONstring);
-//         if(result.changedRows==1){
-//             await ForgotPassword.deleteMany({email});
-//             return res.json({code:"1","msg":"Password Changed Successfully!"});
-//         }
-//         }else{
-//             return res.json({"code":"0","msg":"invalid otp!"});
-//         }
+    try {
+        const [rows] = await db.query('select p_id,pwd from patient where email=?', [req.body.email]);
+        // if(rows.length===0){throw new Error();}
+        assert(rows.length === 1, 'no users');
+        const sentPwd = req.body.pwd;
         
-//     } catch (error) {
-//         res.status(500).send("Server Error!");
-//         console.log(error);
-//     }
-// });
+        const expectedPwd = rows[0].pwd;
+        console.log(sentPwd,expectedPwd);
+        const result = await bcrypt.compare(sentPwd, expectedPwd);
+        if (result) {
+            let patToken= await generateAuthToken(req.body.email,"patient");
+            res.json({ ok: true, atoken: patToken });
+        } else {
+            throw new Error();
+        }
 
+    } catch (e) {
+        console.log(e);
+        res.status(403).json({ ok: false, status: 'no auth' });
+    }
+})
 
 module.exports = router;

@@ -62,7 +62,7 @@ CREATE TABLE `doctor` (
   `sex` varchar(10) NOT NULL,
   `qualification` varchar(100) NOT NULL,
   `specialization` varchar(100) NOT NULL,
-  `pwd` varchar(50) NOT NULL,
+  `pwd` varchar(200) NOT NULL,
   PRIMARY KEY (`d_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -137,7 +137,6 @@ DROP TABLE IF EXISTS `patient`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `patient` (
   `p_id` int(11) NOT NULL AUTO_INCREMENT,
-  `rec_id` int(11) NOT NULL,
   `email` varchar(100) NOT NULL,
   `name` varchar(100) NOT NULL,
   `ph_no` varchar(10) NOT NULL,
@@ -147,10 +146,8 @@ CREATE TABLE `patient` (
   `age` int(11) NOT NULL,
   `height` int(11) NOT NULL,
   `weight` int(11) NOT NULL,
-  `pwd` varchar(50) NOT NULL,
-  PRIMARY KEY (`p_id`),
-  UNIQUE KEY `rec_id` (`rec_id`),
-  UNIQUE KEY `rec_id_2` (`rec_id`)
+  `pwd` varchar(200) NOT NULL,
+  PRIMARY KEY (`p_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -223,7 +220,7 @@ DROP TABLE IF EXISTS `prescription`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `prescription` (
   `pres_id` int(11) NOT NULL AUTO_INCREMENT,
-  `rec_id` int(11) NOT NULL,
+  `p_id` int(11) NOT NULL,
   `date` date NOT NULL,
   `symptoms` varchar(300) NOT NULL,
   `disease` varchar(300) NOT NULL,
@@ -249,10 +246,10 @@ DROP TABLE IF EXISTS `record`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `record` (
-  `rec_id` int(11) NOT NULL,
+  `p_id` int(11) NOT NULL,
   `file` int(11) NOT NULL,
-  KEY `rec_id` (`rec_id`),
-  CONSTRAINT `record_ibfk_1` FOREIGN KEY (`rec_id`) REFERENCES `patient` (`rec_id`) ON DELETE CASCADE ON UPDATE CASCADE
+  KEY `p_id` (`p_id`),
+  CONSTRAINT `record_ibfk_1` FOREIGN KEY (`p_id`) REFERENCES `patient` (`p_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -274,11 +271,11 @@ DROP TABLE IF EXISTS `updates`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `updates` (
   `d_id` int(11) NOT NULL,
-  `rec_id` int(11) NOT NULL,
+  `p_id` int(11) NOT NULL,
   KEY `d_id` (`d_id`),
-  KEY `rec_id` (`rec_id`),
+  KEY `p_id` (`p_id`),
   CONSTRAINT `updates_ibfk_1` FOREIGN KEY (`d_id`) REFERENCES `doctor` (`d_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `updates_ibfk_2` FOREIGN KEY (`rec_id`) REFERENCES `patient` (`rec_id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `updates_ibfk_2` FOREIGN KEY (`p_id`) REFERENCES `patient` (`p_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -300,15 +297,12 @@ DROP TABLE IF EXISTS `uploads`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `uploads` (
   `p_id` int(11) NOT NULL,
-  `rec_id` int(11) NOT NULL,
   `tr_id` int(11) NOT NULL AUTO_INCREMENT,
   `test_name` varchar(100) NOT NULL,
   `date` date NOT NULL,
   PRIMARY KEY (`tr_id`),
   KEY `p_id` (`p_id`),
-  KEY `rec_id` (`rec_id`),
-  CONSTRAINT `uploads_ibfk_1` FOREIGN KEY (`p_id`) REFERENCES `patient` (`p_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `uploads_ibfk_2` FOREIGN KEY (`rec_id`) REFERENCES `patient` (`rec_id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `uploads_ibfk_1` FOREIGN KEY (`p_id`) REFERENCES `patient` (`p_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 

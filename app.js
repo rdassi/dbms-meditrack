@@ -2,20 +2,36 @@
 const { db } = require('./db')
 const express = require('express')
 const app = express()
-const port = 3001
+const port = 3000
+const user = require('./routes/auth');
+const morgan = require('morgan');
+app.use(morgan('tiny'));
 
+app.use(express.static('static'));
+app.use(express.json());
+// LOGIN AND SIGN IN
+app.use('/',user);
 
-app.use(express.static('static'))
+// APPOINTMENTS
+var appointment= require('./routes/appointment');
+app.use('/appointment',appointment);
 
-app.get('/test', (req, res) => {
-  res.json({
-    "message": "hello world"
-  })
-})
+//TEST REPORTS
+
+//PROFILE PAGE
+
+//PRESCRIPTION
+
+// TEST RUN FOR APP.GET
+// app.get('/test', (req, res) => {
+//   res.json({
+//     "message": "hello world"
+//   })
+// })
 
 // var usersRouter = require('./routes/users');
 // app.use('/users',usersRouter);
-app.get('/api/doctor', async function (req, res, next) {
+app.get('/doctor', async function (req, res, next) {
   
   const [rows] = await db.query('select email,d_id from doctor');
   res.json({'result' : rows});

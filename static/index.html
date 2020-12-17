@@ -20,13 +20,13 @@
         <div class="form-container sign-up-container" id="docInfo">
             <form id="doc-sign-up">
                 <div class="form-group">
-                    <input type="text" placeholder="Qualification" required />
-                    <input type="text" placeholder="Specialization" required />
-                    <input type="password" placeholder="Password" required />
+                    <input type="text" id="qual_sp" placeholder="Qualification" required />
+                    <input type="text" id="spl_sp" placeholder="Specialization" required />
+                    <input type="password" id="d_pwd" placeholder="Password" required />
                 </div>
 
                 <!-- <button id="back-doc" onclick="back">Go Back</button> -->
-                <button type="submit">Sign Up</button>
+                <button id="sign-up-doc" type="button">Sign Up</button>
             </form>
         </div>
 
@@ -34,14 +34,14 @@
         <div class="form-container  sign-up-container" id="patInfo">
             <form id="pat-sign-up">
                 <div class="form-group">
-                    <input type="text" placeholder="Address" required />
-                    <input type="number" placeholder="Age" required />
-                    <input type="number" placeholder="Height" required />
-                    <input type="number" placeholder="Weight" required />
-                    <input type="password" placeholder="Password" required />
+                    <input type="text" id="add_sp" placeholder="Address" required />
+                    <input type="number" id="age_sp" placeholder="Age" required />
+                    <input type="number" id="h_sp" placeholder="Height" required />
+                    <input type="number" id="w_sp" placeholder="Weight" required />
+                    <input type="password" id="p_pwd" placeholder="Password" required />
                 </div>
                 <!-- <button id="back-pat" onclick="back">Go Back</button> -->
-                <button type="submit">Sign Up</button>
+                <button id="sign-up-pat" type="button">Sign Up</button>
             </form>
         </div>
 
@@ -49,19 +49,19 @@
         <div class="form-container sign-up-container" id="general_div">
             <form id="general">
 
-                <input type="text" placeholder="Name" required />
-                <input type="email" placeholder="Email (name@example.com)" required />
-                <input type="number" placeholder="Phone Number (+91)" required />
-                <input type="date" placeholder="DOB" min="1900-01-01" />
+                <input type="text" id="name_sp" placeholder="Name" required />
+                <input type="email" id="email_sp" placeholder="Email (name@example.com)" required />
+                <input type="number" id="ph_sp" placeholder="Phone Number (+91)" required />
+                <input type="date" id="dob_sp" placeholder="DOB" min="1900-01-01" />
 
-                <select class="custom-select my-1 mr-sm-2 sex" id="inlineFormCustomSelectPref" required>
+                <select class="custom-select my-1 mr-sm-2 sex" id="sex_sp" required>
                     <option selected>Sex</option>
                     <option value="male">Male</option>
                     <option value="female">Female</option>
                     <option value="intersex">Intersex</option>
                 </select>
 
-                <select class="custom-select my-1 mr-sm-2 sex" id="role" required>
+                <select class="custom-select my-1 mr-sm-2 sex" id="role_sp" required>
                     <option selected>Role</option>
                     <option value="doc">Doctor</option>
                     <option value="pat">Patient</option>
