@@ -9,6 +9,7 @@ app.use(morgan('tiny'));
 
 app.use(express.static('static'));
 app.use(express.json());
+
 // LOGIN AND SIGN IN
 app.use('/',user);
 
@@ -17,10 +18,16 @@ var appointment= require('./routes/appointment');
 app.use('/appointment',appointment);
 
 //TEST REPORTS
+var testreport= require('./routes/testreport');
+app.use('/testreport',testreport);
 
 //PROFILE PAGE
+var profile= require('./routes/profile');
+app.use('/profile',profile);
 
 //PRESCRIPTION
+var prescription= require('./routes/prescription');
+app.use('/prescription',prescription);
 
 // TEST RUN FOR APP.GET
 // app.get('/test', (req, res) => {

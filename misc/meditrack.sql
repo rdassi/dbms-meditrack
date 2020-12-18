@@ -55,7 +55,7 @@ DROP TABLE IF EXISTS `doctor`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `doctor` (
   `d_id` int(11) NOT NULL AUTO_INCREMENT,
-  `email` varchar(100) NOT NULL,
+  `email` varchar(100) NOT NULL UNIQUE,
   `name` varchar(100) NOT NULL,
   `ph_no` varchar(10) NOT NULL,
   `dob` date NOT NULL,
@@ -137,7 +137,7 @@ DROP TABLE IF EXISTS `patient`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `patient` (
   `p_id` int(11) NOT NULL AUTO_INCREMENT,
-  `email` varchar(100) NOT NULL,
+  `email` varchar(100) NOT NULL UNIQUE,
   `name` varchar(100) NOT NULL,
   `ph_no` varchar(10) NOT NULL,
   `dob` date NOT NULL,
