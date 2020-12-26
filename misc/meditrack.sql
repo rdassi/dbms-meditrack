@@ -47,6 +47,33 @@ LOCK TABLES `appointment` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `clinic`
+--
+
+DROP TABLE IF EXISTS `clinic`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `clinic` (
+  `clinic_id` int(11) NOT NULL AUTO_INCREMENT,
+  `d_id` int(11) NOT NULL,
+  `address` varchar(300) NOT NULL,
+  `timing` varchar(200) NOT NULL,
+  `days` varchar(200) NOT NULL,
+  PRIMARY KEY (`clinic_id`),
+  KEY `d_id` (`d_id`),
+  CONSTRAINT `clinic_ibfk_1` FOREIGN KEY (`d_id`) REFERENCES `doctor` (`d_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `appointment`
+--
+
+LOCK TABLES `clinic` WRITE;
+/*!40000 ALTER TABLE `clinic` DISABLE KEYS */;
+/*!40000 ALTER TABLE `clinic` ENABLE KEYS */;
+UNLOCK TABLES;
+--
 -- Table structure for table `doctor`
 --
 
@@ -325,3 +352,53 @@ UNLOCK TABLES;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2020-12-16  0:13:16
+-- fake data for doctor
+insert into `doctor`(`email`,`name`,`ph_no`,`dob`,`sex`,`qualification`,`specialization`,`pwd`) values('amy@doc.com','amy santiago','1234567890','1985-12-10','female','Exists','Existing','$2a$10$/comR4xTKpklPzmhSplXLO3cCOST1M96p2Jvwtxvrl6B5EHeONWtS');
+
+insert into `doctor`(`email`,`name`,`ph_no`,`dob`,`sex`,`qualification`,`specialization`,`pwd`) values('jake@doc.com','jake peralta','1234567890','1985-11-25','male','Exists','Existing','$2a$10$/comR4xTKpklPzmhSplXLO3cCOST1M96p2Jvwtxvrl6B5EHeONWtS');
+
+insert into `doctor`(`email`,`name`,`ph_no`,`dob`,`sex`,`qualification`,`specialization`,`pwd`) values('rosa@doc.com','rosa diaz','1234567890','1975-10-12','female','Exists','Existing','$2a$10$/comR4xTKpklPzmhSplXLO3cCOST1M96p2Jvwtxvrl6B5EHeONWtS');
+
+insert into `doctor`(`email`,`name`,`ph_no`,`dob`,`sex`,`qualification`,`specialization`,`pwd`) values('boyle@doc.com','charles boyle','1234567890','1975-9-12','male','Exists','Existing','$2a$10$/comR4xTKpklPzmhSplXLO3cCOST1M96p2Jvwtxvrl6B5EHeONWtS');
+
+insert into `doctor`(`email`,`name`,`ph_no`,`dob`,`sex`,`qualification`,`specialization`,`pwd`) values('holt@doc.com','raymond holt','1234567890','1975-8-12','male','Exists','Existing','$2a$10$/comR4xTKpklPzmhSplXLO3cCOST1M96p2Jvwtxvrl6B5EHeONWtS');
+
+--fake clinic data
+insert into `clinic`(`d_id`,`address`,`timing`,`days`) values (1,'ABC','timee','simon says');
+
+insert into `clinic`(`d_id`,`address`,`timing`,`days`) values (2,'DEF','timee','simon says');
+
+insert into `clinic`(`d_id`,`address`,`timing`,`days`) values (3,'ABC','timee','simon says');
+
+insert into `clinic`(`d_id`,`address`,`timing`,`days`) values (4,'PQR','timee','simon says');
+
+insert into `clinic`(`d_id`,`address`,`timing`,`days`) values (5,'XYZ','timee','simon says');
+
+--fake data for patient
+insert into `patient`(`email`,`name`,`ph_no`,`dob`,`address`,`sex`,`age`,`height`,`weight`,`pwd`) values ('michael@pat.com','Michael Scott','1234567890','1985-12-23','home','male',45,123,56,'$2a$10$/comR4xTKpklPzmhSplXLO3cCOST1M96p2Jvwtxvrl6B5EHeONWtS');
+
+insert into `patient`(`email`,`name`,`ph_no`,`dob`,`address`,`sex`,`age`,`height`,`weight`,`pwd`) values ('dwight@pat.com','Dwight Schrute','1234567890','1995-08-10','home','male',45,123,56,'$2a$10$/comR4xTKpklPzmhSplXLO3cCOST1M96p2Jvwtxvrl6B5EHeONWtS');
+
+insert into `patient`(`email`,`name`,`ph_no`,`dob`,`address`,`sex`,`age`,`height`,`weight`,`pwd`) values ('jim@pat.com','Jim Halpert','1234567890','1980-12-10','home','male',45,123,56,'$2a$10$/comR4xTKpklPzmhSplXLO3cCOST1M96p2Jvwtxvrl6B5EHeONWtS');
+
+insert into `patient`(`email`,`name`,`ph_no`,`dob`,`address`,`sex`,`age`,`height`,`weight`,`pwd`) values ('pam@pat.com','Pam Beesly','1234567890','1983-12-10','home','female',45,123,56,'$2a$10$/comR4xTKpklPzmhSplXLO3cCOST1M96p2Jvwtxvrl6B5EHeONWtS');
+
+insert into `patient`(`email`,`name`,`ph_no`,`dob`,`address`,`sex`,`age`,`height`,`weight`,`pwd`) values ('jan@pat.com','Jan Levinson','1234567890','1998-11-14','home','female',45,123,56,'$2a$10$/comR4xTKpklPzmhSplXLO3cCOST1M96p2Jvwtxvrl6B5EHeONWtS');
+
+--fake appointment data
+insert into `appointment`(`app_slot`,`app_confirm`, `p_id`, `d_id`, `reason`) values (NOW(),TRUE,1,1,'random pain');
+
+insert into `appointment`(`app_slot`,`app_confirm`, `p_id`, `d_id`, `reason`) values (NOW(),TRUE,2,2,'random pain');
+
+insert into `appointment`(`app_slot`,`app_confirm`, `p_id`, `d_id`, `reason`) values (NOW(),TRUE,3,2,'random pain');
+
+insert into `appointment`(`app_slot`,`app_confirm`, `p_id`, `d_id`, `reason`) values (NOW(),TRUE,4,5,'random pain');
+
+insert into `appointment`(`app_slot`,`app_confirm`, `p_id`, `d_id`, `reason`) values (NOW(),TRUE,5,1,
+'random pain');
+
+insert into `appointment`(`app_slot`,`app_confirm`, `p_id`, `d_id`, `reason`) values (NOW(),TRUE,4,3,'random pain');
+
+insert into `appointment`(`app_slot`,`app_confirm`, `p_id`, `d_id`, `reason`) values (NOW(),TRUE,5,5,'random pain');
+
+insert into `appointment`(`app_slot`,`app_confirm`, `p_id`, `d_id`, `reason`) values (NOW(),TRUE,1,4,'random pain');
