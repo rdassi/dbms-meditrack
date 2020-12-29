@@ -1,233 +1,246 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <meta name="description" content="" />
-        <meta name="author" content="" />
-        <title>MediTrack</title>
-        <link rel="icon" href="images/title_logo.png" type="png">
-        <!-- Font Awesome icons (free version)-->
-        <script src="https://use.fontawesome.com/releases/v5.15.1/js/all.js" crossorigin="anonymous"></script>
-        <!-- Google fonts-->
-        <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
-        <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
-        <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="css/home_styles.css" rel="stylesheet" />
-    </head>
-    <body id="page-top">
-        <!-- Navigation-->
-        <nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top" id="mainNav">
-            <div class="container">
-                <a class="navbar-brand js-scroll-trigger" href="#page-top">MediTrack</a>
-                <button class="navbar-toggler navbar-toggler-right text-uppercase font-weight-bold bg-primary text-white rounded" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                    Menu
-                    <i class="fas fa-bars"></i>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarResponsive">
-                    <ul class="navbar-nav ml-auto">
-                        <!-- <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#profile">Profile</a></li> -->
-                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/home.html">Home</a></li>
-                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/index.html">Logout</a></li>
-                    </ul>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>MediTrack</title>
+    <link rel="icon" href="images/title_logo.png" type="png">
+    <!-- Font Awesome icons (free version)-->
+    <script src="https://use.fontawesome.com/releases/v5.15.1/js/all.js" crossorigin="anonymous"></script>
+    <!-- Google fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet"
+        type="text/css" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="css/home_styles.css" rel="stylesheet" />
+</head>
+
+<body id="page-top">
+    <!-- Navigation-->
+    <nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top" id="mainNav">
+        <div class="container">
+            <a class="navbar-brand js-scroll-trigger" href="#page-top">MediTrack</a>
+            <button
+                class="navbar-toggler navbar-toggler-right text-uppercase font-weight-bold bg-primary text-white rounded"
+                type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive"
+                aria-expanded="false" aria-label="Toggle navigation">
+                Menu
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
+                            href="/home.html">Home</a></li>
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
+                            href="/index.html">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- Masthead-->
+    <header class="masthead bg-primary text-white text-center">
+        <div class="container d-flex align-items-center flex-column">
+            <!-- Masthead Avatar Image-->
+            <img class="masthead-avatar mb-5" src="images/portfolio/main_app.png" alt="" />
+            <!-- Masthead Heading-->
+            <h1 class="masthead-heading text-uppercase mb-0">Appointments</h1>
+        </div>
+    </header>
+    <!-- Menu Section-->
+    <section class="page-section menu" id="menu">
+        <div class="container">
+            <!-- Menu Section Heading-->
+            <!-- <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Book/View Appointments</h2> -->
+
+            <div class="row justify-content-center">
+
+                <!-- Book Appointment-->
+                <!-- <button class="btn btn-secondary" data-toggle="modal" data-target="#portfolioModal1"><h3>Book Appointments</h3></button> -->
+
+            </div>
+            <br>
+            <br>
+            <div class="row justify-content-center" id="avail-doc">
+                <div class="portfolio-item-caption-content text-center">
+                    <h3>Available Doctors</h3>
+                </div>
+                <div class="table-responsive ">
+                    <hr />
+                    <table class="table table-bordered table-striped">
+                        <!-- <legend>Appointment(s) Scheduled</legend> -->
+                        <thead>
+                            <tr>
+                                <th>Doctor ID</th>
+                                <th>Doctor Name</th>
+                                <th>Specialization</th>
+                                <th>Qualification</th>
+                                <th>Clinic address</th>
+                                <th>Book Appointment</th>
+                            </tr>
+                        </thead>
+                        <tbody id="doc-list">
+                            <!-- <tr>
+                                <td>1234</td>
+                                <td>A</td>
+                                <td>A</td>
+                                <td>A</td>
+                                <td>A</td>
+                                <td><button class="bg-secondary text-white rounded" data-toggle="modal"
+                                        data-target="#portfolioModal1">Book</button></td>
+                            </tr> -->
+                        </tbody>
+                    </table>
+                    <hr />
                 </div>
             </div>
-        </nav>
-        <!-- Masthead-->
-        <header class="masthead bg-primary text-white text-center">
-            <div class="container d-flex align-items-center flex-column">
-                <!-- Masthead Avatar Image-->
-                <img class="masthead-avatar mb-5" src="images/portfolio/main_app.png" alt="" />
-                <!-- Masthead Heading-->
-                <h1 class="masthead-heading text-uppercase mb-0">Appointments</h1>
-            </div>
-        </header>
-        <!-- Menu Section-->
-        <section class="page-section menu" id="menu">
-            <div class="container">
-                <!-- Menu Section Heading-->
-                <!-- <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Book/View Appointments</h2> -->
-              
-                <div class="row justify-content-center">
 
-                    <!-- Book Appointment-->
-                    <button class="btn btn-secondary" data-toggle="modal" data-target="#portfolioModal1"><h3>Book Appointments</h3></button>
+
+            <!-- View Appointments-->
+            <div class="row justify-content-center">
+
+                <div class="portfolio-item-caption-content text-center">
+                    <h3>Appointment(s) Scheduled</h3>
+                </div>
+
+                <div class="table-responsive ">
+                    <hr />
+                    <table class="table table-bordered table-striped">
+                        <!-- <legend>Appointment(s) Scheduled</legend> -->
+                        <thead>
+                            <tr>
+                                <th>Appointment ID</th>
+                                <th>Slot</th>
+                                <th>Doctor/Patient Name</th>
+                                <!-- <th>Slot</th> -->
+                                <th>Reason for visit</th>
+                                <th>Status</th>
+                                <th>Edit Status</th>
+
+                            </tr>
+                        </thead>
+                        <tbody id="app-list">
+                            <!-- <tr>
+                                <td>sample id</td>
+                                <td>sample slot</td>
+                                <td>sample name</td>
+                                <td>sample reason</td>
+                            </tr> -->
+                        </tbody>
+                    </table>
+                    <hr />
+                </div>
+            </div>
+    </section>
+    <br>
+    <br>
+    <br>
+    <br>
+    <!--Book a new Appointment Modal-->
+    <div class="portfolio-modal modal fade" id="portfolioModal1" tabindex="-1" role="dialog"
+        aria-labelledby="portfolioModal1Label" aria-hidden="true">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+                <form action="" method="post" accept-charset="utf-8" class="form" role="form">
                     
-                </div>
-                <br>
-                <br>
-                    <!-- <div class="col-md-6 col-lg-3 mb-5"> -->
-                        <!-- <a href="/appointment.html"> -->
-                            <!-- <div class="portfolio-item" mx-auto data-toggle="modal" data-target="#portfolioModal1">
-                                <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
-                                    <div class="portfolio-item-caption-content text-center"><h3>Book Appointments</h3></div>
-                                </div>
-                                
-                                <img class="img-fluid" src="images/add.png" alt="" /> 
-                            </div> -->
-                        <!-- </a> -->
-                    <!-- </div> -->
-                    <!-- View Appointments-->
-                    <div class="row justify-content-center">
-                        <!-- <a href="/prescription.html"> -->
-                            <!-- <div class="portfolio-item mx-auto" data-toggle="modal" data-target="#portfolioModal2"> -->
-                                <!-- <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100"> -->
-                                    <div class="portfolio-item-caption-content text-center"><h3>Appointment(s) Scheduled</h3></div>
-                                <!-- </div> -->
-                                
-                                <div class="table-responsive ">
-                                    <!-- {% if logged_in_user.can_add_prescription %} -->
-                                        <!-- <button class="btn btn-primary" data-toggle="modal" data-target="#edit" data-remote="{% url 'health:add_prescription' %}">Add a Prescription</button> -->
-                                        <hr />
-                                        <!-- {% for user in user.active_patients %}
-                                            {% if user.active_prescriptions %} -->
-                                                <table class="table table-bordered table-striped">
-                                                    <!-- <legend>Appointment(s) Scheduled</legend> -->
-                                                    <thead>
-                                                    <tr>
-                                                        <th>Doctor/Patient</th>
-                                                        <th>Slot</th>
-                                                        <th>Reason for visit</th>
-                                                        <!-- {% if logged_in_user.can_add_prescription %}
-                                                            <th>Edit</th>
-                                                            <th>Delete</th>
-                                                        {% endif %} -->
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                    <!-- {% for prescription in user.active_prescriptions %} -->
-                                                        <tr>
-                                                            <td>{{ prescription.dosage }}</td>
-                                                            <td>{{ prescription.name }}</td>
-                                                            <td>{{ prescription.directions }}</td>
-                        
-                                                            <!-- {% if logged_in_user.can_add_prescription %}
-                                                                <td><p title="Edit"><button class="btn btn-primary btn-xs" data-title="Edit" data-remote="{% url 'health:edit_prescription' prescription.pk %}" data-toggle="modal" data-target="#edit"><span class="glyphicon glyphicon-pencil"></span></button></p></td>
-                                                                <td><p title="Delete"><a class="btn btn-danger btn-xs" data-title="Delete" href="{% url 'health:delete_prescription' prescription.pk %}"><span class="glyphicon glyphicon-trash"></span></a></p></td>
-                                                            {% endif %} -->
-                         
-                                                        </tr>
-                                                    <!-- {% endfor %} -->
-                                                    </tbody>
-                                                </table>
-                                            <!-- {% else %}
-                                                <div class="text-center">
-                                                    <h2> No prescriptions for {% include 'user_link.html' %}</h2>
-                                                </div>
-                                            {% endif %} -->
-                                            <hr />
-                                        <!-- {% endfor %}
-                                    {% endif %} -->
-                                </div>
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
 
-                                <!-- <img class="img-fluid" src="images/view.png" alt="" /> -->
-                            <!-- </div> -->
-                        <!-- </a> -->
+                        <h4 class="modal-title" id="add-prescription">New Appointment</h4>
                     </div>
-        </section>
-        <br>
-        <br>
-        <br>
-        <br>
-        <!--Book a new Appointment Modal-->
-        <div class="portfolio-modal modal fade" id="portfolioModal1" tabindex="-1" role="dialog" aria-labelledby="portfolioModal1Label" aria-hidden="true">
-            <div class="modal-dialog modal-xl" role="document">
-                <div class="modal-content">
-                    <form action="{% url 'health:edit_prescription' prescription.pk %}" method="post" accept-charset="utf-8" class="form" role="form">
-                        <!-- {% csrf_token %} -->
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-             
-                            <h4 class="modal-title" id="add-prescription">New Appointment</h4>
-                        </div>
-                        <div class="modal-body">
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <legend>Doctor Name/ID</legend>
-                                    <input class="form-control" name="doc_name" placeholder=""  {% if prescription %}value="{{ prescription.name }}" {% endif %}/>
-                                </div>
-                                <div class="col-sm-6">
-                                    <legend>Slot</legend>
-                                    <input class="form-control" name="slot" placeholder="" type="datetime-local" {% if prescription %}value="{{ prescription.dosage }}" {% endif %}/>
-                                </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <legend>Doctor ID</legend>
+                                <input class="form-control" name="doc_name" id="book-id" placeholder="" readonly />
                             </div>
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <legend>Reason for Visit</legend>
-                                    <input class="form-control" name="directions" placeholder=""/> 
-                                    <!-- {% if prescription %}value="{{ prescription.directions }}" {% endif %}/> -->
-                                </div>
+                            <div class="col-sm-6">
+                                <legend>Slot</legend>
+                                <input class="form-control" id="slot" placeholder="" type="datetime-local" value="" />
                             </div>
-                            <div class="row">
-                                <div class="col-sm-8">
-                                    <legend>Patient</legend>
-                                    <select name="patient" class='form-control'>
-                                        <!-- {% for patient in user.active_patients %}
-                                            <option value="{{ patient.pk }}" {% if prescription.patient == patient %}selected="selected"{% endif %}>{{ patient.get_full_name }}</option>
-                                        {% endfor %} -->
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
-                            <button class="btn btn-primary btn-lg" type="submit">Book</button>
                         </div>
                         <br>
-                    </form>
-                </div>
-                </div>
-            </div>
-        </div>
-        <!-- View Appointments Modal-->
-        <div class="portfolio-modal modal fade" id="portfolioModal2" tabindex="-1" role="dialog" aria-labelledby="portfolioModal2Label" aria-hidden="true">
-            <div class="modal-dialog modal-xl" role="document">
-                <div class="modal-content">
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true"><i class="fas fa-times"></i></span>
-                    </button>
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="add-prescription">Appointment(s) Scheduled</h4>
-                    </div>
-                    <div class="modal-body text-center">
-                        <div class="container">
-                            
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <legend>Reason for Visit</legend>
+                                <input class="form-control" id="reason" placeholder="" />
+                            </div>
                         </div>
+                        <!-- <div class="row">
+                            <div class="col-sm-8">
+                                <legend>Patient</legend>
+                                <select name="patient" class='form-control'>
+                                </select>
+                            </div>
+                        </div> -->
+                    </div>
+                    <div class="modal-footer">
+                        <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+                        <button class="btn btn-primary btn-lg" id="finish-book" type="button">Book</button>
+                    </div>
+                    <br>
+                </form>
+            </div>
+        </div>
+    </div>
+    </div>
+    <!-- View Appointments-->
+    <div class="portfolio-modal modal fade" id="portfolioModal2" tabindex="-1" role="dialog"
+        aria-labelledby="portfolioModal2Label" aria-hidden="true">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"><i class="fas fa-times"></i></span>
+                </button>
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="add-prescription">Appointment(s) Scheduled</h4>
+                </div>
+                <div class="modal-body text-center">
+                    <div class="container">
+
                     </div>
                 </div>
             </div>
         </div>
-        <!-- Footer-->
-        <footer class="footer text-center">
-            <div class="container">
-                <!-- Footer About Text-->
-                <div class="col-lg-12">
-                    <h4 class="text-uppercase mb-4">About MediTrack</h4>
-                    <p class="lead mb-0">
-                        MediTrack is a web app to keep a track of your appointments and medical history.
-                        
-                        
-                    </p>
-                </div>                
+    </div>
+    <!-- Footer-->
+    <footer class="footer text-center">
+        <div class="container">
+            <!-- Footer About Text-->
+            <div class="col-lg-12">
+                <h4 class="text-uppercase mb-4">About MediTrack</h4>
+                <p class="lead mb-0">
+                    MediTrack is a web app to keep a track of your appointments and medical history.
+
+
+                </p>
             </div>
-        </footer>
-        <!-- Copyright Section-->
-        <div class="copyright py-4 text-center text-white">
-            <div class="container"><small>Copyright © MediTrack 2020</small></div>
         </div>
-        <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes)-->
-        <div class="scroll-to-top d-lg-none position-fixed">
-            <a class="js-scroll-trigger d-block text-center text-white rounded" href="#page-top"><i class="fa fa-chevron-up"></i></a>
-        </div>
-        
-       
-        <!-- Bootstrap core JS-->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
-        <!-- Third party plugin JS-->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
-        <!-- Core theme JS-->
-        <script src="static/js/home.js"></script>
-    </body>
+    </footer>
+    <!-- Copyright Section-->
+    <div class="copyright py-4 text-center text-white">
+        <div class="container"><small>Copyright © MediTrack 2020</small></div>
+    </div>
+    <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes)-->
+    <div class="scroll-to-top d-lg-none position-fixed">
+        <a class="js-scroll-trigger d-block text-center text-white rounded" href="#page-top"><i
+                class="fa fa-chevron-up"></i></a>
+    </div>
+
+
+    <!-- Bootstrap core JS-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Third party plugin JS-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.7.0/moment.min.js"></script>
+    <!-- Core theme JS-->
+    <script src="js/appt.js"></script>
+</body>
+
 </html>

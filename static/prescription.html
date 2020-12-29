@@ -148,7 +148,7 @@
                                     <legend>Patient</legend>
                                     <select name="patient" class='form-control'>
                                         {% for patient in user.active_patients %}
-                                            <option value="{{ patient.pk }}" {% if prescription.patient == patient %}selected="selected"{% endif %}>{{ patient.get_full_name }}</option>
+                                            <option value="" selected="selected"></option>
                                         {% endfor %}
                                     </select>
                                 </div>

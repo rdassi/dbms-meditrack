@@ -46,7 +46,7 @@ function details(event) {
 // document.getElementsByName("sign-up").forEach((e)=>{
 //     e.addEventListener('submit', signUp);
 // })
-console.log("aaaaaaaaaaaaaaa");
+// console.log("aaaaaaaaaaaaaaa");
 document.getElementById("sign-up-pat").addEventListener('click', signUp);
 document.getElementById("sign-up-doc").addEventListener('click', signUp);
 
@@ -57,6 +57,9 @@ function signUp() {
 
         formData.qualification = document.getElementById('qual_sp').value;
         formData.specialization = document.getElementById('spl_sp').value;
+        formData.address = document.getElementById('add_sp_d').value;
+        formData.time = document.getElementById('time_sp').value;
+        formData.days = document.getElementById('days_sp').value;
         formData.pwd = document.getElementById('d_pwd').value;
 
         console.log("STARTING FETCH");
@@ -74,7 +77,7 @@ function signUp() {
             .then(data => console.log(data)).catch(() => { alert("Error"); });
     }
     if (document.getElementById('role_sp').value === "pat") {
-        formData.address = document.getElementById('add_sp').value;
+        formData.address = document.getElementById('add_sp_p').value;
         formData.age = document.getElementById('age_sp').value;
         formData.height = document.getElementById('h_sp').value;
         formData.weight = document.getElementById('w_sp').value;
@@ -116,7 +119,7 @@ document.getElementById("sign-in").addEventListener('submit', login);
 // var users_doc = [{ "email": "ABC@bleh.com", "pwd": "123" }, { "email": "DEF@bleh.com", "pwd": "456" }];
 // var users_pat = [{ "email": "GHI@bleh.com", "pwd": "789" }];
 
-function login(event) {
+async function login(event) {
 
     event.preventDefault();
     //GET EMAIL AND PWD VALUES FROM HTML FORM
@@ -125,43 +128,61 @@ function login(event) {
     var userInfo = {
         email: document.getElementById("email").value,
         pwd: document.getElementById("pwd").value
-    }
-        ;
-    console.log(userInfo);
-    // var found = 0;
+    };
+   
     if (document.getElementById('role-sign-in').value === "doc") {
-        // found = findDoc(userInfo);
-        console.log("STARTING FETCH");
-        console.log(userInfo);
-        fetch('/login/doctor', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-                // 'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: JSON.stringify(userInfo)
-        })
-            .then(response => response.json())
-            .then(data => window.location.replace("http://localhost:3000/home.html")).catch(() => { alert("Error"); });
+      
+        try {
+            const result = await fetch('/login/doctor', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                    // 'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: JSON.stringify(userInfo)
+            })
+            if (!result.ok) {
+                
+                throw new Error('Something went wrong');
+              }
+            console.log(result);
+            const resjson = await result.json()
+            localStorage['atoken'] = resjson.atoken;
+            window.location.replace("http://localhost:3000/home.html");
+
+        }
+        catch (e) { console.log("sdvs",e); alert("ENTER CORRECT CREDENTIALS!"); }
+
 
     }
     if (document.getElementById('role-sign-in').value === "pat") {
-        // found = findPat(userInfo);
-        console.log("STARTING FETCH");
-        console.log(userInfo);
-        fetch('/login/patient', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-                // 'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: JSON.stringify(userInfo)
-        })
-            .then(response => response.json())
-            .then(data => window.location.replace("http://localhost:3000/home.html")).catch(() => { alert("Error"); });
+        
+        try {
+            const result = await fetch('/login/patient', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                    // 'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: JSON.stringify(userInfo)
+            })
+            if (!result.ok) {
+                
+                throw new Error('Something went wrong');
+              }
+            const resjson = await result.json()
+            localStorage['atoken'] = resjson.atoken;
+            window.location.replace("http://localhost:3000/home.html");
+
+        }
+        catch (e) { alert(e); }
     }
 
-    // if (found === 1) {
+
+
+}
+
+// if (found === 1) {
     //     //console.log("condition true");
     //     alert("You are logged in");
     //     window.location.replace("http://localhost:3001/home.html");
@@ -169,9 +190,6 @@ function login(event) {
     // else {
     //     alert("Invalid username, please try again or if you are new register");
     // }
-
-}
-
 // function findDoc(userInfo) {
 //     //ADD API TO CHECK VALUES IN DATABASE
 
@@ -191,5 +209,4 @@ function login(event) {
 //         if (userInfo[0] === users_pat[i].email && userInfo[1] === users_pat[i].pwd)
 //             found = 1;
 //     }
-//     return found;
-// }
+//     return found; }

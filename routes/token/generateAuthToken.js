@@ -8,13 +8,13 @@ const jwt = require("jsonwebtoken");
 // }
 /**
  * returning auth tokens to be used for frontend
- * @param {string} email 
+ * @param {number} id 
  * @param {string} role 
  */
 
-async function GenerateJWToken(email,role) {
+async function GenerateJWToken(id,role) {
     
-    return jwt.sign({email,role}, process.env.ACCESS_TOKEN_SECRET, {
+    return jwt.sign({id,role}, process.env.ACCESS_TOKEN_SECRET, {
         expiresIn: '3d',
     });
 }

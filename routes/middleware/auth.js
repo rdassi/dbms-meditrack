@@ -8,7 +8,9 @@ const auth = (role)=> async (req,res,next)=>{
         const token = req.header("x-auth-token");
         jwt.verify(token,process.env.ACCESS_TOKEN_SECRET,(error,decoded)=>{
             if(error) throw error;
-            req.email=decoded.email;
+            // use the line below if the line above doesnt work (band-aid)
+            //if (error) { res.status(403).json({ ok: false, status: 'auth failed' }); return; }
+            req.id=decoded.id;
             req.role=decoded.role;
             if(req.role!=role){
                 throw new Error("Wrong Role!")
@@ -23,4 +25,3 @@ const auth = (role)=> async (req,res,next)=>{
 };
 
 module.exports = auth;
-// DONT TOUCH THIS SHIT AT ALL FOR YOUR OWN SAFETY

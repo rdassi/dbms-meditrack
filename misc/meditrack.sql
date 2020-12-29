@@ -47,32 +47,9 @@ LOCK TABLES `appointment` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `clinic`
---
-
-DROP TABLE IF EXISTS `clinic`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `clinic` (
-  `clinic_id` int(11) NOT NULL AUTO_INCREMENT,
-  `d_id` int(11) NOT NULL,
-  `address` varchar(300) NOT NULL,
-  `timing` varchar(200) NOT NULL,
-  `days` varchar(200) NOT NULL,
-  PRIMARY KEY (`clinic_id`),
-  KEY `d_id` (`d_id`),
-  CONSTRAINT `clinic_ibfk_1` FOREIGN KEY (`d_id`) REFERENCES `doctor` (`d_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `appointment`
 --
 
-LOCK TABLES `clinic` WRITE;
-/*!40000 ALTER TABLE `clinic` DISABLE KEYS */;
-/*!40000 ALTER TABLE `clinic` ENABLE KEYS */;
-UNLOCK TABLES;
 --
 -- Table structure for table `doctor`
 --
@@ -89,6 +66,9 @@ CREATE TABLE `doctor` (
   `sex` varchar(10) NOT NULL,
   `qualification` varchar(100) NOT NULL,
   `specialization` varchar(100) NOT NULL,
+  `address` varchar(300) NOT NULL,
+  `timing` varchar(200) NOT NULL,
+  `days` varchar(200) NOT NULL,
   `pwd` varchar(200) NOT NULL,
   PRIMARY KEY (`d_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -101,58 +81,6 @@ CREATE TABLE `doctor` (
 LOCK TABLES `doctor` WRITE;
 /*!40000 ALTER TABLE `doctor` DISABLE KEYS */;
 /*!40000 ALTER TABLE `doctor` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `gets_app`
---
-
-DROP TABLE IF EXISTS `gets_app`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `gets_app` (
-  `p_id` int(11) NOT NULL,
-  `app_id` int(11) NOT NULL,
-  KEY `p_id` (`p_id`),
-  KEY `app_id` (`app_id`),
-  CONSTRAINT `gets_app_ibfk_1` FOREIGN KEY (`p_id`) REFERENCES `patient` (`p_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `gets_app_ibfk_2` FOREIGN KEY (`app_id`) REFERENCES `appointment` (`app_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `gets_app`
---
-
-LOCK TABLES `gets_app` WRITE;
-/*!40000 ALTER TABLE `gets_app` DISABLE KEYS */;
-/*!40000 ALTER TABLE `gets_app` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `has_app`
---
-
-DROP TABLE IF EXISTS `has_app`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `has_app` (
-  `d_id` int(11) NOT NULL,
-  `app_id` int(11) NOT NULL,
-  KEY `d_id` (`d_id`),
-  KEY `app_id` (`app_id`),
-  CONSTRAINT `has_app_ibfk_1` FOREIGN KEY (`d_id`) REFERENCES `doctor` (`d_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `has_app_ibfk_2` FOREIGN KEY (`app_id`) REFERENCES `appointment` (`app_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `has_app`
---
-
-LOCK TABLES `has_app` WRITE;
-/*!40000 ALTER TABLE `has_app` DISABLE KEYS */;
-/*!40000 ALTER TABLE `has_app` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -248,11 +176,16 @@ DROP TABLE IF EXISTS `prescription`;
 CREATE TABLE `prescription` (
   `pres_id` int(11) NOT NULL AUTO_INCREMENT,
   `p_id` int(11) NOT NULL,
+  `d_id` int(11) NOT NULL,
   `date` date NOT NULL,
   `symptoms` varchar(300) NOT NULL,
   `disease` varchar(300) NOT NULL,
   `comments` varchar(300) NOT NULL,
-  PRIMARY KEY (`pres_id`)
+  PRIMARY KEY (`pres_id`),
+  KEY `p_id` (`p_id`),
+  KEY `d_id` (`d_id`),
+  CONSTRAINT `prescription_ibfk_1` FOREIGN KEY (`p_id`) REFERENCES `patient` (`p_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `prescription_ibfk_2` FOREIGN KEY (`d_id`) REFERENCES `doctor` (`d_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -289,31 +222,6 @@ LOCK TABLES `record` WRITE;
 /*!40000 ALTER TABLE `record` ENABLE KEYS */;
 UNLOCK TABLES;
 
---
--- Table structure for table `updates`
---
-
-DROP TABLE IF EXISTS `updates`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `updates` (
-  `d_id` int(11) NOT NULL,
-  `p_id` int(11) NOT NULL,
-  KEY `d_id` (`d_id`),
-  KEY `p_id` (`p_id`),
-  CONSTRAINT `updates_ibfk_1` FOREIGN KEY (`d_id`) REFERENCES `doctor` (`d_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `updates_ibfk_2` FOREIGN KEY (`p_id`) REFERENCES `patient` (`p_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `updates`
---
-
-LOCK TABLES `updates` WRITE;
-/*!40000 ALTER TABLE `updates` DISABLE KEYS */;
-/*!40000 ALTER TABLE `updates` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `uploads`
@@ -353,28 +261,18 @@ UNLOCK TABLES;
 
 -- Dump completed on 2020-12-16  0:13:16
 -- fake data for doctor
-insert into `doctor`(`email`,`name`,`ph_no`,`dob`,`sex`,`qualification`,`specialization`,`pwd`) values('amy@doc.com','amy santiago','1234567890','1985-12-10','female','Exists','Existing','$2a$10$/comR4xTKpklPzmhSplXLO3cCOST1M96p2Jvwtxvrl6B5EHeONWtS');
+insert into `doctor`(`email`,`name`,`ph_no`,`dob`,`sex`,`qualification`,`specialization`,`address`,`timing`,`days`,`pwd`) values('amy@doc.com','amy santiago','1234567890','1985-12-10','female','Exists','Existing','ABC','timee','simon says','$2a$10$/comR4xTKpklPzmhSplXLO3cCOST1M96p2Jvwtxvrl6B5EHeONWtS');
 
-insert into `doctor`(`email`,`name`,`ph_no`,`dob`,`sex`,`qualification`,`specialization`,`pwd`) values('jake@doc.com','jake peralta','1234567890','1985-11-25','male','Exists','Existing','$2a$10$/comR4xTKpklPzmhSplXLO3cCOST1M96p2Jvwtxvrl6B5EHeONWtS');
+insert into `doctor`(`email`,`name`,`ph_no`,`dob`,`sex`,`qualification`,`specialization`,`address`,`timing`,`days`,`pwd`) values('jake@doc.com','jake peralta','1234567890','1985-11-25','male','Exists','Existing','ABC','timee','simon says','$2a$10$/comR4xTKpklPzmhSplXLO3cCOST1M96p2Jvwtxvrl6B5EHeONWtS');
 
-insert into `doctor`(`email`,`name`,`ph_no`,`dob`,`sex`,`qualification`,`specialization`,`pwd`) values('rosa@doc.com','rosa diaz','1234567890','1975-10-12','female','Exists','Existing','$2a$10$/comR4xTKpklPzmhSplXLO3cCOST1M96p2Jvwtxvrl6B5EHeONWtS');
+insert into `doctor`(`email`,`name`,`ph_no`,`dob`,`sex`,`qualification`,`specialization`,`address`,`timing`,`days`,`pwd`) values('rosa@doc.com','rosa diaz','1234567890','1975-10-12','female','Exists','Existing','ABC','timee','simon says','$2a$10$/comR4xTKpklPzmhSplXLO3cCOST1M96p2Jvwtxvrl6B5EHeONWtS');
 
-insert into `doctor`(`email`,`name`,`ph_no`,`dob`,`sex`,`qualification`,`specialization`,`pwd`) values('boyle@doc.com','charles boyle','1234567890','1975-9-12','male','Exists','Existing','$2a$10$/comR4xTKpklPzmhSplXLO3cCOST1M96p2Jvwtxvrl6B5EHeONWtS');
+insert into `doctor`(`email`,`name`,`ph_no`,`dob`,`sex`,`qualification`,`specialization`,`address`,`timing`,`days`,`pwd`) values('boyle@doc.com','charles boyle','1234567890','1975-9-12','male','Exists','Existing','ABC','timee','simon says','$2a$10$/comR4xTKpklPzmhSplXLO3cCOST1M96p2Jvwtxvrl6B5EHeONWtS');
 
-insert into `doctor`(`email`,`name`,`ph_no`,`dob`,`sex`,`qualification`,`specialization`,`pwd`) values('holt@doc.com','raymond holt','1234567890','1975-8-12','male','Exists','Existing','$2a$10$/comR4xTKpklPzmhSplXLO3cCOST1M96p2Jvwtxvrl6B5EHeONWtS');
+insert into `doctor`(`email`,`name`,`ph_no`,`dob`,`sex`,`qualification`,`specialization`,`address`,`timing`,`days`,`pwd`) values('holt@doc.com','raymond holt','1234567890','1975-8-12','male','Exists','Existing','ABC','timee','simon says','$2a$10$/comR4xTKpklPzmhSplXLO3cCOST1M96p2Jvwtxvrl6B5EHeONWtS');
 
---fake clinic data
-insert into `clinic`(`d_id`,`address`,`timing`,`days`) values (1,'ABC','timee','simon says');
 
-insert into `clinic`(`d_id`,`address`,`timing`,`days`) values (2,'DEF','timee','simon says');
-
-insert into `clinic`(`d_id`,`address`,`timing`,`days`) values (3,'ABC','timee','simon says');
-
-insert into `clinic`(`d_id`,`address`,`timing`,`days`) values (4,'PQR','timee','simon says');
-
-insert into `clinic`(`d_id`,`address`,`timing`,`days`) values (5,'XYZ','timee','simon says');
-
---fake data for patient
+-- fake data for patient
 insert into `patient`(`email`,`name`,`ph_no`,`dob`,`address`,`sex`,`age`,`height`,`weight`,`pwd`) values ('michael@pat.com','Michael Scott','1234567890','1985-12-23','home','male',45,123,56,'$2a$10$/comR4xTKpklPzmhSplXLO3cCOST1M96p2Jvwtxvrl6B5EHeONWtS');
 
 insert into `patient`(`email`,`name`,`ph_no`,`dob`,`address`,`sex`,`age`,`height`,`weight`,`pwd`) values ('dwight@pat.com','Dwight Schrute','1234567890','1995-08-10','home','male',45,123,56,'$2a$10$/comR4xTKpklPzmhSplXLO3cCOST1M96p2Jvwtxvrl6B5EHeONWtS');
@@ -385,7 +283,7 @@ insert into `patient`(`email`,`name`,`ph_no`,`dob`,`address`,`sex`,`age`,`height
 
 insert into `patient`(`email`,`name`,`ph_no`,`dob`,`address`,`sex`,`age`,`height`,`weight`,`pwd`) values ('jan@pat.com','Jan Levinson','1234567890','1998-11-14','home','female',45,123,56,'$2a$10$/comR4xTKpklPzmhSplXLO3cCOST1M96p2Jvwtxvrl6B5EHeONWtS');
 
---fake appointment data
+-- fake appointment data
 insert into `appointment`(`app_slot`,`app_confirm`, `p_id`, `d_id`, `reason`) values (NOW(),TRUE,1,1,'random pain');
 
 insert into `appointment`(`app_slot`,`app_confirm`, `p_id`, `d_id`, `reason`) values (NOW(),TRUE,2,2,'random pain');

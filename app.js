@@ -1,4 +1,3 @@
-
 const { db } = require('./db')
 const express = require('express')
 const app = express()
@@ -6,6 +5,7 @@ const port = 3000
 const user = require('./routes/auth');
 const morgan = require('morgan');
 app.use(morgan('tiny'));
+//const atob = require("atob");
 
 app.use(express.static('static'));
 app.use(express.json());

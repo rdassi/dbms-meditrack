@@ -1,9 +1,11 @@
 const express = require("express");
 const bcrypt = require("bcryptjs");
 const assert = require("assert");
+const jsonwebtoken = require("jsonwebtoken");
 //const auth = require("/middleware/auth");
 const generateAuthToken = require("./token/generateAuthToken");
 const { db } = require('../db');
+
 
 
 const router = express.Router();
@@ -21,7 +23,7 @@ try{
     
     const hashedpwd = await bcrypt.hash(pwd, salt);
     console.log(pwd,hashedpwd);
-    const [rows] = await db.query('insert into doctor (email, name, ph_no, dob, sex, qualification, specialization, pwd) values(?)', [[req.body.email, req.body.name, req.body.ph_no, req.body.dob, req.body.sex, req.body.qualification, req.body.specialization, hashedpwd]]);
+    const [rows] = await db.query('insert into doctor (email, name, ph_no, dob, sex, qualification, specialization, address, timing, days, pwd) values(?)', [[req.body.email, req.body.name, req.body.ph_no, req.body.dob, req.body.sex, req.body.qualification, req.body.specialization, hashedpwd]]);
     //assert(rows.length === 1, 'incorrect values');
     res.json({ "ok": "true" });
 
@@ -59,7 +61,7 @@ router.post('/login/doctor', async (req, res, next) => {
     //output ->{ok:true, atoken:<>}
 
     try {
-        const [rows] = await db.query('select email,pwd from doctor where email=?', [req.body.email]);
+        const [rows] = await db.query('select d_id,pwd from doctor where email=?', [req.body.email]);
         // if(rows.length===0){throw new Error();}
         assert(rows.length === 1, 'no users');
         const sentPwd = req.body.pwd;
@@ -67,7 +69,7 @@ router.post('/login/doctor', async (req, res, next) => {
         const result = await bcrypt.compare(sentPwd, expectedPwd);
 
         if (result) {
-            let docToken= await generateAuthToken(req.body.email,"doctor");
+            let docToken= await generateAuthToken(rows[0].d_id,"doctor");
             res.json({ ok: true, atoken: docToken });
         } else {
             throw new Error();
@@ -94,7 +96,7 @@ router.post('/login/patient', async (req, res, next) => {
         console.log(sentPwd,expectedPwd);
         const result = await bcrypt.compare(sentPwd, expectedPwd);
         if (result) {
-            let patToken= await generateAuthToken(req.body.email,"patient");
+            let patToken= await generateAuthToken(rows[0].p_id,"patient");
             res.json({ ok: true, atoken: patToken });
         } else {
             throw new Error();
