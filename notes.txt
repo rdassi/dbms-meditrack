@@ -4,3 +4,10 @@ npm install express
 
 2. package.json file pops up: this will have all the packages that are installed thereafter
 By default with version npm 5.0+ npm install adds the module to the dependencies list in the package.json file; with earlier versions of npm, you must specify the --save option explicitly. Then, afterwards, running npm install in the app directory will automatically install modules in the dependencies list
+
+
+
+____________
+VS picking up on bits typescript in JS 
+npm i -D @types/jsonwebtoken
+npm i -D @types/express

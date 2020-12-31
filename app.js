@@ -6,7 +6,7 @@ const user = require('./routes/auth');
 const morgan = require('morgan');
 app.use(morgan('tiny'));
 //const atob = require("atob");
-
+app.use(express.json({limit:"20mb"}));
 app.use(express.static('static'));
 app.use(express.json());
 

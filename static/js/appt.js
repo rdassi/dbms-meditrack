@@ -26,16 +26,53 @@ $(function () {
             )
                 .then(response => response.json())
                 .then((response) => {
-                    
+
                     response.result.forEach((ele) => {
                         $("#app-list").append(`<tr>
                     <td>${ele.app_id}</td>
                     <td>${new Date(ele.app_slot).toString('YYYY-MM-dd')}</td>
                     <td>${ele.name}</td>
                     <td>${ele.reason}</td>
-                    <td>${ele.app_confirm? "Confirmed": "Pending"}</td>
-                    ${(parsed_token['role']==="doctor")?`<td><button class="btn btn-secondary btn-xs" data-title="Edit"><span class="glyphicon glyphicon-pencil"><i class="fas fa-edit"></i></button></td>`: ""}
+                    <td id="app-confirm-${ele.app_id}">${ele.app_confirm ? "Confirmed" : "Pending"}</td>
+                    ${(parsed_token['role'] === "doctor") ? `<td><button class="btn btn-secondary btn-xs" id="edit-app-${ele.app_id}" data-title="Edit"><span class="glyphicon glyphicon-pencil"><i class="fas fa-edit"></i></button></td>` : ""}
                 </tr>`)
+                        $(`#edit-app-${ele.app_id}`).on("click",
+                            () => {
+                                // {!ele.app_confirm ? "Confirmed" : "Pending"}
+                                const update = {
+                                    app_id: ele.app_id,
+                                    app_confirm: (!ele.app_confirm)
+                                }
+                                console.log(update);
+                                fetch(('/appointment/edit/doctor'), {
+                                    method: 'PUT',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                        'x-auth-token': localStorage['atoken']
+                                        // 'Content-Type': 'application/x-www-form-urlencoded',
+                                    },
+                                    body: JSON.stringify(update)
+                                }).then(response => {
+                                    return new Promise((res, rej) => {
+                                        // console.log(response);
+                                        if (response.ok) {
+
+                                            res(response);
+                                            return
+                                        }
+                                        else {
+                                            rej(new Error("Query Failed"));
+                                        }
+                                    })
+                                })
+                                    .then(response => response.json())
+                                    .then(() => {
+                                        alert("Appointment Status Changed!!")
+                                        window.location.reload();
+                                    }).catch((e) => { console.log(e); alert("Error"); });
+
+                            }
+                        )
                     })
                 }).catch(() => { alert("Error"); });
 
@@ -43,12 +80,6 @@ $(function () {
     }
 });
 
-// function BookAppointment(arg) {
-//     // return function(){
-//     //     $("#book-id").val(arg);
-//     //     console.log("helllooooooooo");
-//     //  }
-// }
 
 $(function () {
     //LOADS LIST OF DOCTORS FOR PATIENTS ONLY
@@ -120,21 +151,23 @@ $("#finish-book").on("click", () => {
                 body: JSON.stringify(appInfo)
             }
             ).then(response => {
-                return new Promise((res,rej)=>{ 
-                    console.log(response);
-                    if(response.ok){
-                        
+                return new Promise((res, rej) => {
+                    // console.log(response);
+                    if (response.ok) {
+
                         res(response);
-                        return 
+                        return
                     }
-                    else{
+                    else {
                         rej(new Error("kya hua tera vaada...P.S. Query Failed"));
                     }
                 })
             })
                 .then(response => response.json())
-                .then(()=>{ alert("Appointment Queued, Kindly check back for confirmation from the doctor's end.")
-            window.location.reload();} ).catch(() => { alert("Error"); });
+                .then(() => {
+                    alert("Appointment Queued, Kindly check back for confirmation from the doctor's end.")
+                    window.location.reload();
+                }).catch(() => { alert("Error"); });
         }
     }
 

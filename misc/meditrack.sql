@@ -124,10 +124,13 @@ DROP TABLE IF EXISTS `pharmacy`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `pharmacy` (
   `med_id` int(11) NOT NULL AUTO_INCREMENT,
+  `pres_id` int(11) NOT NULL,
   `medicine` varchar(100) NOT NULL,
   `dosage` varchar(100) NOT NULL,
   `directions` varchar(300) NOT NULL,
-  PRIMARY KEY (`med_id`)
+  PRIMARY KEY (`med_id`),
+  KEY `pres_id` (`pres_id`),
+  CONSTRAINT `pharmacy_ibfk_1` FOREIGN KEY (`pres_id`) REFERENCES `prescription` (`pres_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -138,32 +141,6 @@ CREATE TABLE `pharmacy` (
 LOCK TABLES `pharmacy` WRITE;
 /*!40000 ALTER TABLE `pharmacy` DISABLE KEYS */;
 /*!40000 ALTER TABLE `pharmacy` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `pres_meds`
---
-
-DROP TABLE IF EXISTS `pres_meds`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `pres_meds` (
-  `pres_id` int(11) NOT NULL,
-  `med_id` int(11) NOT NULL,
-  KEY `pres_id` (`pres_id`),
-  KEY `med_id` (`med_id`),
-  CONSTRAINT `pres_meds_ibfk_1` FOREIGN KEY (`pres_id`) REFERENCES `prescription` (`pres_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `pres_meds_ibfk_2` FOREIGN KEY (`med_id`) REFERENCES `pharmacy` (`med_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `pres_meds`
---
-
-LOCK TABLES `pres_meds` WRITE;
-/*!40000 ALTER TABLE `pres_meds` DISABLE KEYS */;
-/*!40000 ALTER TABLE `pres_meds` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -198,56 +175,33 @@ LOCK TABLES `prescription` WRITE;
 /*!40000 ALTER TABLE `prescription` ENABLE KEYS */;
 UNLOCK TABLES;
 
+
 --
--- Table structure for table `record`
+-- Table structure for table `testrec`
 --
 
-DROP TABLE IF EXISTS `record`;
+DROP TABLE IF EXISTS `testrec`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `record` (
-  `p_id` int(11) NOT NULL,
-  `file` int(11) NOT NULL,
-  KEY `p_id` (`p_id`),
-  CONSTRAINT `record_ibfk_1` FOREIGN KEY (`p_id`) REFERENCES `patient` (`p_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `record`
---
-
-LOCK TABLES `record` WRITE;
-/*!40000 ALTER TABLE `record` DISABLE KEYS */;
-/*!40000 ALTER TABLE `record` ENABLE KEYS */;
-UNLOCK TABLES;
-
-
---
--- Table structure for table `uploads`
---
-
-DROP TABLE IF EXISTS `uploads`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `uploads` (
+CREATE TABLE `testrec` (
   `p_id` int(11) NOT NULL,
   `tr_id` int(11) NOT NULL AUTO_INCREMENT,
   `test_name` varchar(100) NOT NULL,
   `date` date NOT NULL,
+  `file_name` varchar(100) NOT NULL, 
   PRIMARY KEY (`tr_id`),
   KEY `p_id` (`p_id`),
-  CONSTRAINT `uploads_ibfk_1` FOREIGN KEY (`p_id`) REFERENCES `patient` (`p_id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `testrec_ibfk_1` FOREIGN KEY (`p_id`) REFERENCES `patient` (`p_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `uploads`
+-- Dumping data for table `testrec`
 --
 
-LOCK TABLES `uploads` WRITE;
-/*!40000 ALTER TABLE `uploads` DISABLE KEYS */;
-/*!40000 ALTER TABLE `uploads` ENABLE KEYS */;
+LOCK TABLES `testrec` WRITE;
+/*!40000 ALTER TABLE `testrec` DISABLE KEYS */;
+/*!40000 ALTER TABLE `testrec` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -300,3 +254,35 @@ insert into `appointment`(`app_slot`,`app_confirm`, `p_id`, `d_id`, `reason`) va
 insert into `appointment`(`app_slot`,`app_confirm`, `p_id`, `d_id`, `reason`) values (NOW(),TRUE,5,5,'random pain');
 
 insert into `appointment`(`app_slot`,`app_confirm`, `p_id`, `d_id`, `reason`) values (NOW(),TRUE,1,4,'random pain');
+
+-- Prescriptions
+
+insert into prescription (p_id, d_id,date,symptoms,disease,comments) values(1,1,NOW(),'Cough','Common Cold','Nil');
+insert into prescription (p_id, d_id,date,symptoms,disease,comments) values(2,1,NOW(),'Cough','Common Cold','Nil');
+insert into prescription (p_id, d_id,date,symptoms,disease,comments) values(3,4,NOW(),'Cough','Common Cold','Nil');
+insert into prescription (p_id, d_id,date,symptoms,disease,comments) values(4,1,NOW(),'Cough','Common Cold','Nil');
+insert into prescription (p_id, d_id,date,symptoms,disease,comments) values(5,1,NOW(),'Cough','Common Cold','Nil');
+insert into prescription (p_id, d_id,date,symptoms,disease,comments) values(1,2,NOW(),'Cough','Common Cold','Nil');
+insert into prescription (p_id, d_id,date,symptoms,disease,comments) values(2,3,NOW(),'Cough','Common Cold','Nil');
+insert into prescription (p_id, d_id,date,symptoms,disease,comments) values(3,2,NOW(),'Runny Nose','Common Cold','Nil');
+insert into prescription (p_id, d_id,date,symptoms,disease,comments) values(4,2,NOW(),'Cough','Common Cold','Nil');
+insert into prescription (p_id, d_id,date,symptoms,disease,comments) values(2,5,NOW(),'Fever','Common Cold','Nil');
+insert into prescription (p_id, d_id,date,symptoms,disease,comments) values(4,5,NOW(),'Cough','Common Cold','Nil');
+insert into prescription (p_id, d_id,date,symptoms,disease,comments) values(5,4,NOW(),'Vomitting','Food Poisoning','Nil');
+insert into prescription (p_id, d_id,date,symptoms,disease,comments) values(2,2,NOW(),'Vomitting','Food Poisoning','Nil');
+
+-- Medicines
+
+insert into pharmacy (pres_id,medicine,dosage,directions) values(2,'montek lc','1 time a day','after dinner');
+insert into pharmacy (pres_id,medicine,dosage,directions) values(1,'montek lc','1 time a day','after dinner');
+insert into pharmacy (pres_id,medicine,dosage,directions) values(3,'montek lc','1 time a day','after dinner');
+insert into pharmacy (pres_id,medicine,dosage,directions) values(1,'allegra 120mg','2 times a day','with water');
+insert into pharmacy (pres_id,medicine,dosage,directions) values(2,'allegra 120mg','2 times a day','with water');
+insert into pharmacy (pres_id,medicine,dosage,directions) values(4,'allegra 120mg','2 times a day','with water');
+insert into pharmacy (pres_id,medicine,dosage,directions) values(5,'azee 500','3 times a day','with water');
+insert into pharmacy (pres_id,medicine,dosage,directions) values(4,'azee 500','3 times a day','with water');
+insert into pharmacy (pres_id,medicine,dosage,directions) values(6,'azee 500','3 times a day','with water');
+insert into pharmacy (pres_id,medicine,dosage,directions) values(10,'azee 500','3 times a day','with water');
+insert into pharmacy (pres_id,medicine,dosage,directions) values(9,'azee 500','3 times a day','with water');
+insert into pharmacy (pres_id,medicine,dosage,directions) values(8,'azee 500','3 times a day','with water');
+insert into pharmacy (pres_id,medicine,dosage,directions) values(7,'azee 500','3 times a day','with water');

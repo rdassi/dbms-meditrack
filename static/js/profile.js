@@ -48,18 +48,22 @@ $(function () {
                     $("#profile-ph").val(response['ph_no']);
                     $("#pat").prop("checked", true);
                     
-
-                    if(response['sex']==="male"){
+                    console.log(response['sex']);
+                    /**
+                     * @type {string}
+                     */
+                    const sex = response['sex'].toLowerCase();
+                    if(sex=== "male"){
                         $("#male").prop("checked", true);
                         
                     }
-                    else if (response['sex']==="female"){
+                    else if (sex==="female"){
                         $("#female").prop("checked", true);;
                     }
                     else{
                         $("#intersex").prop("checked", true);
                     }
-                    $("#profile-add").val(response['address']);
+                    $("#profile-address").val(response['address']);
                     $("#profile-height").val(response['height']);
                     $("#profile-weight").val(response['weight']);
                     // SLICING DATE TO MAKE IT ADHERE TO FORMAT NEEDED IN CALENDER
@@ -73,12 +77,13 @@ $(function () {
                     $("#profile-ph").val(response['ph_no']);
                     $("#doc").prop("checked", true);
 
-                    console.log(response['sex']==="female");
-                    if(response['sex']==="male"){
+                    console.log(response['sex']);
+                    const sex = response['sex'].toLowerCase();
+                    if(sex==="male"){
                         $("#male").prop("checked", true);
                         
                     }
-                    else if (response['sex']==="female"){
+                    else if (sex==="female"){
                         $("#female").prop("checked", true);;
                     }
                     else{
@@ -128,7 +133,7 @@ $("#save-profile").click(function(){
         }
         else {
             console.log(document.getElementById("profile-dob"));
-            // $("#prof-pat").hide();
+            
             var profileInfo ={
                 id: document.getElementById("profile-id").value,
                 email: document.getElementById("profile-email").value,
@@ -174,7 +179,6 @@ $("#del-profile").click(function(){
                 headers: {
                     'Content-Type': 'application/json',
                     'x-auth-token': localStorage['atoken']
-                    // 'Content-Type': 'application/x-www-form-urlencoded',
                 },
                 body: JSON.stringify({id: Id})
             })
