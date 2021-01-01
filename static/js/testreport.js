@@ -101,13 +101,13 @@ $(function () {
                                     }
                                 })
                                 if (res.status !== 200) {
-                                    alert('bad');
+                                    alert('Cannot download!');
                                 } else {
                                     const resJson = await res.json();
                                     // DOWNLOAD DATAAAAAA
                                     console.log(resJson);
                                     //json data -> uint array -> blob -> download blob
-                                    const {data} = resJson;
+                                    const { data } = resJson;
                                     const uarray = new Uint8Array(data);
                                     const blob = new Blob([uarray]);
                                     // let jsonBlob = new Blob(['{"name": "test"}'])
@@ -129,7 +129,7 @@ $(function () {
                                     })
                                         .then(response => response.json())
                                         .then((response) => {
-                                            alert("Record Deleted Successfully!");
+                                            alert("Report Deleted Successfully!");
                                             window.location.reload();
                                         }
                                         )
@@ -171,7 +171,7 @@ $("#test-rec").on("submit", function (event) {
             console.log('error', await res.json());
             alert('error');
         } else {
-            alert('uploaded');
+            alert('Uploaded successfully!');
             window.location.reload();
         }
     }
@@ -219,18 +219,15 @@ $("#patient-list").on("change", () => {
                                         }
                                     })
                                     if (res.status !== 200) {
-                                        alert('bad');
+                                        alert('Cannot Download!');
                                     } else {
                                         const resJson = await res.json();
                                         // DOWNLOAD DATAAAAAA
                                         console.log(resJson);
                                         //json data -> uint array -> blob -> download blob
-                                        const {data} = resJson;
+                                        const { data } = resJson;
                                         const uarray = new Uint8Array(data);
                                         const blob = new Blob([uarray]);
-                                        // let jsonBlob = new Blob(['{"name": "test"}'])
-                                        // downloadBlob(jsonBlob, 'myfile.json');
-
                                         downloadBlob(blob, resJson.name);
                                     }
 
