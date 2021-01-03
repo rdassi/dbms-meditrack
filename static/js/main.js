@@ -50,7 +50,7 @@ function details(event) {
 document.getElementById("sign-up-pat").addEventListener('click', signUp);
 document.getElementById("sign-up-doc").addEventListener('click', signUp);
 
-function signUp() {
+async function signUp() {
 
     console.log("SIGN UP FUNCTION WORKING");
     if (document.getElementById('role_sp').value === "doc") {
@@ -64,17 +64,29 @@ function signUp() {
 
         console.log("STARTING FETCH");
 
-        fetch('/register/doctor', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-                // 'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: JSON.stringify(formData)
+        try {
+            const result = await fetch('/register/doctor', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                    // 'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: JSON.stringify(formData)
+            })
+            if (!result.ok) {
+
+                throw new Error('User not found!');
+            }
+            const resjson = await result.json()
+            // .then(response => response.json())
+            // .then(data => console.log(data))
+
+        } catch (e){
+            console.log(e);
+            alert("Details Entered in incorrect format!");
+            window.location.replace("/");
+            // alert("Error");
         }
-        )
-            .then(response => response.json())
-            .then(data => console.log(data)).catch(() => { alert("Error"); });
     }
     if (document.getElementById('role_sp').value === "pat") {
         formData.address = document.getElementById('add_sp_p').value;
@@ -85,16 +97,29 @@ function signUp() {
 
         console.log("STARTING FETCH");
         console.log(formData);
-        fetch('/register/patient', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-                // 'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: JSON.stringify(formData)
-        })
-            .then(response => response.json())
-            .then(data => console.log(data)).catch(() => { alert("Error"); });
+        try {
+            const result = await fetch('/register/patient', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                    // 'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: JSON.stringify(formData)
+            })
+            if (!result.ok) {
+
+                throw new Error('User not found!');
+            }
+            const resjson = await result.json()
+            // .then(response => response.json())
+            // .then(data => console.log(data))
+
+        } catch (e){
+            console.log(e);
+            alert("Details Entered in incorrect format!");
+            window.location.replace("/");
+            // alert("Error");
+        }
     }
 }
 
@@ -129,9 +154,9 @@ async function login(event) {
         email: document.getElementById("email").value,
         pwd: document.getElementById("pwd").value
     };
-   
+
     if (document.getElementById('role-sign-in').value === "doc") {
-      
+
         try {
             const result = await fetch('/login/doctor', {
                 method: 'POST',
@@ -142,21 +167,21 @@ async function login(event) {
                 body: JSON.stringify(userInfo)
             })
             if (!result.ok) {
-                
-                throw new Error('Something went wrong');
-              }
+
+                throw new Error('User not found!');
+            }
             console.log(result);
             const resjson = await result.json()
             localStorage['atoken'] = resjson.atoken;
             window.location.replace("http://localhost:3000/home.html");
 
         }
-        catch (e) { console.log("sdvs",e); alert("ENTER CORRECT CREDENTIALS!"); }
+        catch (e) { console.log("sdvs", e); alert("User Not Found! Enter Correct Credentials"); }
 
 
     }
     if (document.getElementById('role-sign-in').value === "pat") {
-        
+
         try {
             const result = await fetch('/login/patient', {
                 method: 'POST',
@@ -167,15 +192,15 @@ async function login(event) {
                 body: JSON.stringify(userInfo)
             })
             if (!result.ok) {
-                
-                throw new Error('Something went wrong');
-              }
+
+                throw new Error('User not found!');
+            }
             const resjson = await result.json()
             localStorage['atoken'] = resjson.atoken;
             window.location.replace("http://localhost:3000/home.html");
 
         }
-        catch (e) { alert(e); }
+        catch (e) { console.log(e); alert("User Not Found! Enter Correct Credentials"); }
     }
 
 
