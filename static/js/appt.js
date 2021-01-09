@@ -108,6 +108,8 @@ $(function () {
                     <td>${ele.specialization}</td>
                     <td>${ele.qualification}</td>
                     <td>${ele.address}</td>
+                    <td>${ele.timing}</td>
+                    <td>${ele.days}</td>
                     <td><button class="bg-secondary text-white rounded" data-toggle="modal"                                        data-target="#portfolioModal1" id="doc-${ele.d_id}" >Book</button></td>
                 </tr>`)
                         $(`#doc-${ele.d_id}`).on("click", () => {

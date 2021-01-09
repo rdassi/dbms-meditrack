@@ -2,11 +2,11 @@
 
 const parseJwt = (token) => {
     try {
-      return JSON.parse(atob(token.split('.')[1]));
+        return JSON.parse(atob(token.split('.')[1]));
     } catch (e) {
-      return null;
+        return null;
     }
-  };
+};
 
 $(function () {
     var token = localStorage['atoken'];
@@ -47,27 +47,27 @@ $(function () {
                     $("#profile-email").val(response['email']);
                     $("#profile-ph").val(response['ph_no']);
                     $("#pat").prop("checked", true);
-                    
+
                     console.log(response['sex']);
                     /**
                      * @type {string}
                      */
                     const sex = response['sex'].toLowerCase();
-                    if(sex=== "male"){
+                    if (sex === "male") {
                         $("#male").prop("checked", true);
-                        
+
                     }
-                    else if (sex==="female"){
+                    else if (sex === "female") {
                         $("#female").prop("checked", true);;
                     }
-                    else{
+                    else {
                         $("#intersex").prop("checked", true);
                     }
                     $("#profile-address").val(response['address']);
                     $("#profile-height").val(response['height']);
                     $("#profile-weight").val(response['weight']);
                     // SLICING DATE TO MAKE IT ADHERE TO FORMAT NEEDED IN CALENDER
-                    var date= response['dob'].slice(0,10);
+                    var date = response['dob'].slice(0, 10);
                     $("#profile-dob").val(date);
                 }
                 else {
@@ -79,14 +79,14 @@ $(function () {
 
                     console.log(response['sex']);
                     const sex = response['sex'].toLowerCase();
-                    if(sex==="male"){
+                    if (sex === "male") {
                         $("#male").prop("checked", true);
-                        
+
                     }
-                    else if (sex==="female"){
+                    else if (sex === "female") {
                         $("#female").prop("checked", true);;
                     }
-                    else{
+                    else {
                         $("#intersex").prop("checked", true);
                     }
                     $("#profile-add").val(response['address']);
@@ -96,13 +96,13 @@ $(function () {
                     $("#profile-timing").val(response['timing']);
                     // SLICING DATE TO MAKE IT ADHERE TO FORMAT NEEDED IN CALENDER
                     $("#profile-days").val(response['days']);
-                    var date= response['dob'].slice(0,10)
+                    var date = response['dob'].slice(0, 10)
                     $("#profile-dob").val(date);
-        
+
                 }
-            console.log(response);    
-                
-                
+                console.log(response);
+
+
             }).catch((e) => { alert("Error"); console.log(e); });
 
     }
@@ -110,8 +110,8 @@ $(function () {
 });
 
 
-$("#save-profile").click(function(){
-    
+$("#save-profile").click(function () {
+
     var token = localStorage['atoken'];
     // console.log(token);
     if (token) {
@@ -119,7 +119,7 @@ $("#save-profile").click(function(){
         // console.log(parsed_token);
         if (parsed_token['role'] === "patient") {
             // $("#prof-doc").hide();
-            var profileInfo ={
+            var profileInfo = {
                 id: document.getElementById("profile-id").value,
                 email: document.getElementById("profile-email").value,
                 name: document.getElementById("profile-name").value,
@@ -129,12 +129,12 @@ $("#save-profile").click(function(){
                 dob: document.getElementById("profile-dob").value,
                 address: document.getElementById("profile-address").value,
                 sex: $('input[name="sex"]:checked').val()
-            } 
+            }
         }
         else {
             console.log(document.getElementById("profile-dob"));
-            
-            var profileInfo ={
+
+            var profileInfo = {
                 id: document.getElementById("profile-id").value,
                 email: document.getElementById("profile-email").value,
                 name: document.getElementById("profile-name").value,
@@ -148,7 +148,7 @@ $("#save-profile").click(function(){
                 sex: $('input[name="sex"]:checked').val()
             }
         }
-        
+
         fetch(('/profile/edit/' + parsed_token['role']), {
             method: 'PUT',
             headers: {
@@ -159,38 +159,43 @@ $("#save-profile").click(function(){
             body: JSON.stringify(profileInfo)
         })
             .then(response => response.json())
-            .then( response => alert("Profile Updated!!") ).catch((e) => { console.log(e); alert("Error"); });
+            .then(response => {
+                alert("Profile Updated!!");
+                window.location.reload();
+            }).catch((e) => { console.log(e); alert("Error"); });
     }
-    
+
 });
 
-$("#del-profile").click(function(){
-    
+$("#del-profile").click(function () {
+
     var token = localStorage['atoken'];
-    
+
     if (token) {
         var parsed_token = parseJwt(token);
         // console.log(parsed_token);
-        var Id= document.getElementById("profile-id").value;
+        var Id = document.getElementById("profile-id").value;
 
-        if(confirm("Do you want to delete your account?")){
+        if (confirm("Do you want to delete your account?")) {
             fetch(('/profile/delete/' + parsed_token['role']), {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
                     'x-auth-token': localStorage['atoken']
                 },
-                body: JSON.stringify({id: Id})
+                body: JSON.stringify({ id: Id })
             })
                 .then(response => response.json())
-                .then( response =>{ alert("Profile Deleted!!")
-                localStorage['atoken']= undefined;
-                        window.location.href="/"; }).catch((e) => { console.log(e); alert("Error"); });
+                .then(response => {
+                    alert("Profile Deleted!!")
+                    localStorage['atoken'] = undefined;
+                    window.location.href = "/";
+                }).catch((e) => { console.log(e); alert("Error"); });
         }
-        }
-        
-        
-        
-    
+    }
+
+
+
+
 });
 

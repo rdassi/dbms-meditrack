@@ -77,6 +77,10 @@ async function signUp() {
 
                 throw new Error('User not found!');
             }
+            else{
+                alert("Proceed to Login!");
+                window.location.replace("/");
+            }
             const resjson = await result.json()
             // .then(response => response.json())
             // .then(data => console.log(data))
@@ -109,6 +113,10 @@ async function signUp() {
             if (!result.ok) {
 
                 throw new Error('User not found!');
+            }
+            else{
+                alert("Proceed to Login!");
+                window.location.replace("/");
             }
             const resjson = await result.json()
             // .then(response => response.json())

@@ -406,7 +406,7 @@ function ViewPrescriptionDoc() {
 
 
 //ADD PRESCRIPTIONS
-$("#save-med").on("click", () => {
+$("#save-pres").on("click", () => {
 
   var token = localStorage['atoken'];
   if (token) {

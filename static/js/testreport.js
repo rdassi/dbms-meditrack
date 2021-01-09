@@ -119,7 +119,7 @@ $(function () {
                         )
                         $(`#del-tr-${ele.tr_id}`).on("click",
                             () => {//FUNCTION TO DELETE REPORT FOR PATIENT
-                                if (confirm("Do you want to delete this prescription?")) {
+                                if (confirm("Do you want to delete this test report?")) {
                                     fetch('/testreport/delete/patient/' + ele.tr_id, {
                                         method: 'DELETE',
                                         headers: {

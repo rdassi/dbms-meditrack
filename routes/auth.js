@@ -23,8 +23,8 @@ try{
     
     const hashedpwd = await bcrypt.hash(pwd, salt);
     console.log(pwd,hashedpwd);
-    const [rows] = await db.query('insert into doctor (email, name, ph_no, dob, sex, qualification, specialization, address, timing, days, pwd) values(?)', [[req.body.email, req.body.name, req.body.ph_no, req.body.dob, req.body.sex, req.body.qualification, req.body.specialization, hashedpwd]]);
-    //assert(rows.length === 1, 'incorrect values');
+    const [rows] = await db.query('insert into doctor (email, name, ph_no, dob, sex, qualification, specialization, address, timing, days, pwd) values(?)', [[req.body.email, req.body.name, req.body.ph_no, req.body.dob, req.body.sex, req.body.qualification, req.body.specialization, req.body.address, req.body.time, req.body.days, hashedpwd]]);
+    
     res.json({ "ok": "true" });
 
 }
