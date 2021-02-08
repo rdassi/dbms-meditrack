@@ -211,7 +211,7 @@ $("#patient-list").on("change", () => {
                                 async () => {
                                     console.log('hi')
                                     // DOWNLOAD REPORT FROM MONGO BY QUERYING IT FROM THERE
-                                    const res = await fetch('/testrecord/download/doctor/' + ele.tr_id, {
+                                    const res = await fetch('/testreport/download/doctor/' + ele.tr_id, {
                                         method: 'GET',
                                         headers: {
                                             'x-auth-token': localStorage['atoken']
@@ -219,6 +219,7 @@ $("#patient-list").on("change", () => {
                                         }
                                     })
                                     if (res.status !== 200) {
+                                        console.log(res.status);
                                         alert('Cannot Download!');
                                     } else {
                                         const resJson = await res.json();
